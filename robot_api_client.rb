@@ -2,9 +2,11 @@ require 'net/http'
 require 'json'
 require 'csv'
 
-class FetchLanguage
-    def fetch(url)
+
+class FetchLanguage 
+    def fetch()
         # You should choose a better exception.
+        url = 'https://robot.diveintocode.jp:17777/programLanguages'
         uri = URI.parse(url)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
@@ -30,4 +32,4 @@ class FetchLanguage
 end
 
 response = FetchLanguage.new
-response.fetch('https://robot.diveintocode.jp:17777/programLanguages')
+response.fetch()
