@@ -1,10 +1,6 @@
 require 'client-api'
-
 # Testing using data from real Api
-
 api = ClientApi::Api.new
-
-
 describe "Testing my Api's" do
 
     it "Providing the true url" do
@@ -27,37 +23,36 @@ describe "Testing my Api's" do
             }
         )
     end
-
 end
 
-
 # Testing using mock data 
-
 class FetchLanguage 
     def initialize(languages) 
        @languages = languages
     end 
     
     def fetch()
-        String code = "code"
-        String displayName = 'displayName'
         @languages.map { |s| "{#{s.code},#{s.displayName}}"}.join(',')
     end 
  end
-
 describe FetchLanguage do 
     it 'The list_languages_names method should work correctly' do 
         lang1 = class_double('language','displayName') 
         lang2 = class_double('language','displayName') 
+        lang3 = class_double('language','displayName')
         
         allow(lang1).to receive(:code) { 'ruby'} 
         allow(lang1).to receive(:displayName) {'Ruby'}
 
-        allow(lang2).to receive(:code) { 'java'} 
-        allow(lang2).to receive(:displayName) { 'Java'} 
+        allow(lang2).to receive(:code) { 'python'} 
+        allow(lang2).to receive(:displayName) { 'Python'} 
+
+        allow(lang3).to receive(:code) { 'java'} 
+        allow(lang3).to receive(:displayName) { 'Java'} 
         
-        cr = FetchLanguage.new [lang1,lang2]
-        response = cr.fetch()
-        expect(response).to eq('{ruby,Ruby},{java,Java}') 
+        cr = FetchLanguage.new [lang1,lang2, lang3]
+        responses = cr.fetch
+        expect(responses).to eq('{ruby,Ruby},{python,Python},{java,Java}') 
     end 
 end
+
